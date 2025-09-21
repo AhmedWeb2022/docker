@@ -1,0 +1,10 @@
+{
+    "name": "modules/teacher",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Modules\\Teacher\\": "src/"
+        }
+    },
+    "require": {}
+}

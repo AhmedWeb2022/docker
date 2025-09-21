@@ -1,0 +1,2375 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "User API",
+        "description": "API documentation for managing stages with localization support.",
+        "version": "1.1"
+    },
+    "paths": {
+        "/api/employee/logout": {
+            "post": {
+                "tags": [
+                    "Authenticated Employee"
+                ],
+                "summary": "Log out the authenticated employee",
+                "operationId": "b0f80ca2c0eebaabbf66ac97ad7f86f1",
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "device_token": {
+                                        "description": "Device token for push notifications",
+                                        "type": "string",
+                                        "example": "token123",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Employee logged out successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - Authentication required"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/employee/change_password": {
+            "post": {
+                "tags": [
+                    "Authenticated Employee"
+                ],
+                "summary": "Change the authenticated employee's password",
+                "operationId": "004b1ccaa82638f004b9f2b9dcdb4a27",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "old_password": {
+                                        "description": "Current password",
+                                        "type": "string",
+                                        "example": "secret123"
+                                    },
+                                    "new_password": {
+                                        "description": "New password",
+                                        "type": "string",
+                                        "example": "newsecret123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password changed successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid old password or bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized - Authentication required"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/employee/update_account": {
+            "post": {
+                "tags": [
+                    "Authenticated Employee"
+                ],
+                "summary": "Update the authenticated employee's account details",
+                "operationId": "3c1d57fa7e63476003ae3ac9312696d3",
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Employee's full name",
+                                        "type": "string",
+                                        "example": "John Smith",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Account updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized - Authentication required"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/employee/delete_account": {
+            "post": {
+                "tags": [
+                    "Authenticated Employee"
+                ],
+                "summary": "Delete the authenticated employee's account",
+                "operationId": "8571da77682b83dc90c12da316779816",
+                "responses": {
+                    "204": {
+                        "description": "Account deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized - Authentication required"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/employee/register": {
+            "post": {
+                "tags": [
+                    "Employee Authentication"
+                ],
+                "summary": "Register a new employee",
+                "operationId": "ee30f9031918036356bd7bb6199c6be8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Employee's full name",
+                                        "type": "string",
+                                        "example": "John Smith"
+                                    },
+                                    "username": {
+                                        "description": "Employee's username",
+                                        "type": "string",
+                                        "example": "johnsmith",
+                                        "nullable": true
+                                    },
+                                    "phone": {
+                                        "description": "Employee's phone number",
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "identify_number": {
+                                        "description": "Employee's identification number",
+                                        "type": "string",
+                                        "example": "ID12345"
+                                    },
+                                    "email": {
+                                        "description": "Employee's email address",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john@example.com"
+                                    },
+                                    "password": {
+                                        "description": "Employee's password",
+                                        "type": "string",
+                                        "example": "secret123"
+                                    },
+                                    "device_token": {
+                                        "description": "Device token",
+                                        "type": "string",
+                                        "example": "token123",
+                                        "nullable": true
+                                    },
+                                    "device_id": {
+                                        "description": "Device ID",
+                                        "type": "string",
+                                        "example": "device456",
+                                        "nullable": true
+                                    },
+                                    "device_type": {
+                                        "description": "Device type",
+                                        "type": "string",
+                                        "example": "Android",
+                                        "nullable": true
+                                    },
+                                    "device_os": {
+                                        "description": "Device OS",
+                                        "type": "string",
+                                        "example": "Android",
+                                        "nullable": true
+                                    },
+                                    "device_os_version": {
+                                        "description": "Device OS version",
+                                        "type": "string",
+                                        "example": "14",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Employee registered successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input or duplicate data (e.g., email/phone already exists)"
+                    }
+                }
+            }
+        },
+        "/api/employee/login": {
+            "post": {
+                "tags": [
+                    "Employee Authentication"
+                ],
+                "summary": "Log in an employee",
+                "operationId": "a7090122867269c2dd6a90cc848db74b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "credential": {
+                                        "description": "Employee's email or phone",
+                                        "type": "string",
+                                        "example": "john@example.com"
+                                    },
+                                    "password": {
+                                        "description": "Employee's password",
+                                        "type": "string",
+                                        "example": "secret123"
+                                    },
+                                    "device_id": {
+                                        "description": "Device ID",
+                                        "type": "string",
+                                        "example": "device456",
+                                        "nullable": true
+                                    },
+                                    "device_token": {
+                                        "description": "Device token",
+                                        "type": "string",
+                                        "example": "token123",
+                                        "nullable": true
+                                    },
+                                    "device_type": {
+                                        "description": "Device type",
+                                        "type": "string",
+                                        "example": "Android",
+                                        "nullable": true
+                                    },
+                                    "device_os": {
+                                        "description": "Device OS",
+                                        "type": "string",
+                                        "example": "Android",
+                                        "nullable": true
+                                    },
+                                    "device_os_version": {
+                                        "description": "Device OS version",
+                                        "type": "string",
+                                        "example": "14",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Employee logged in successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/api/employee/check_credential": {
+            "post": {
+                "tags": [
+                    "Employee Authentication"
+                ],
+                "summary": "Check if an employee's credential (email/phone) is valid or exists",
+                "operationId": "21b79f2737b0a73cebda283f6615fea8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "credential": {
+                                        "description": "Employee's email or phone",
+                                        "type": "string",
+                                        "example": "john@example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Credential check successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid credential format"
+                    }
+                }
+            }
+        },
+        "/api/employee/check_code": {
+            "post": {
+                "tags": [
+                    "Employee Authentication"
+                ],
+                "summary": "Verify a reset code for an employee's credential",
+                "operationId": "9cbb223b697fc02cc3566ec5e93095a4",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "credential": {
+                                        "description": "Employee's email or phone",
+                                        "type": "string",
+                                        "example": "john@example.com"
+                                    },
+                                    "code": {
+                                        "description": "Verification code",
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Code verified successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid credential or code"
+                    },
+                    "404": {
+                        "description": "Credential not found"
+                    }
+                }
+            }
+        },
+        "/api/employee/reset_password": {
+            "post": {
+                "tags": [
+                    "Employee Authentication"
+                ],
+                "summary": "Reset an employee's password",
+                "operationId": "3dc96998ddeea2f57aca3bec16945d8c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "credential": {
+                                        "description": "Employee's email or phone",
+                                        "type": "string",
+                                        "example": "john@example.com"
+                                    },
+                                    "code": {
+                                        "description": "Verification code",
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "password": {
+                                        "description": "New password",
+                                        "type": "string",
+                                        "minLength": 6,
+                                        "example": "newsecret123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password reset successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid credential, code, or password"
+                    },
+                    "404": {
+                        "description": "Credential not found"
+                    }
+                }
+            }
+        },
+        "/dashboard/fetch_employees": {
+            "post": {
+                "tags": [
+                    "Dashboard Employee"
+                ],
+                "summary": "Fetch a list of employees",
+                "operationId": "f38e24cab916f3459cce2d4263b5209a",
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Filter by employee name",
+                                        "type": "string",
+                                        "example": "John",
+                                        "nullable": true
+                                    },
+                                    "email": {
+                                        "description": "Filter by employee email",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john@example.com",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "A list of employees",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/dashboard/fetch_employee_details": {
+            "post": {
+                "tags": [
+                    "Dashboard Employee"
+                ],
+                "summary": "Fetch details of a specific employee",
+                "operationId": "440dcc1af459506662958277a994914c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "employee_id": {
+                                        "description": "The ID of the employee",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Employee details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Employee not found"
+                    },
+                    "400": {
+                        "description": "Invalid employee ID"
+                    }
+                }
+            }
+        },
+        "/dashboard/create_employee": {
+            "post": {
+                "tags": [
+                    "Dashboard Employee"
+                ],
+                "summary": "Create a new employee",
+                "operationId": "30f690093eff5951a0194ad765f70c14",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Employee's full name",
+                                        "type": "string",
+                                        "example": "John Smith"
+                                    },
+                                    "username": {
+                                        "description": "Employee's username",
+                                        "type": "string",
+                                        "example": "johnsmith",
+                                        "nullable": true
+                                    },
+                                    "phone": {
+                                        "description": "Employee's phone number",
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "identify_number": {
+                                        "description": "Employee's identification number",
+                                        "type": "string",
+                                        "example": "ID12345"
+                                    },
+                                    "email": {
+                                        "description": "Employee's email address",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john@example.com"
+                                    },
+                                    "password": {
+                                        "description": "Employee's password",
+                                        "type": "string",
+                                        "example": "secret123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Employee created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input or duplicate data (e.g., email/phone already exists)"
+                    }
+                }
+            }
+        },
+        "/dashboard/update_employee": {
+            "post": {
+                "tags": [
+                    "Dashboard Employee"
+                ],
+                "summary": "Update an existing employee",
+                "operationId": "b6e564296c69c83686aa2e76992314c7",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "employee_id": {
+                                        "description": "The ID of the employee to update",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "name": {
+                                        "description": "Employee's full name",
+                                        "type": "string",
+                                        "example": "John Smith",
+                                        "nullable": true
+                                    },
+                                    "username": {
+                                        "description": "Employee's username",
+                                        "type": "string",
+                                        "example": "johnsmith",
+                                        "nullable": true
+                                    },
+                                    "phone": {
+                                        "description": "Employee's phone number",
+                                        "type": "string",
+                                        "example": "1234567890",
+                                        "nullable": true
+                                    },
+                                    "identify_number": {
+                                        "description": "Employee's identification number",
+                                        "type": "string",
+                                        "example": "ID12345",
+                                        "nullable": true
+                                    },
+                                    "email": {
+                                        "description": "Employee's email address",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john@example.com",
+                                        "nullable": true
+                                    },
+                                    "password": {
+                                        "description": "Employee's new password",
+                                        "type": "string",
+                                        "example": "newsecret123",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Employee updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Employee not found"
+                    },
+                    "400": {
+                        "description": "Invalid input or duplicate data (e.g., email/phone already exists)"
+                    }
+                }
+            }
+        },
+        "/dashboard/delete_employee": {
+            "post": {
+                "tags": [
+                    "Dashboard Employee"
+                ],
+                "summary": "Delete an employee",
+                "operationId": "e0341500db55417dc2a63eadb0aca4f1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "employee_id": {
+                                        "description": "The ID of the employee to delete",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Employee deleted successfully"
+                    },
+                    "404": {
+                        "description": "Employee not found"
+                    },
+                    "400": {
+                        "description": "Invalid employee ID"
+                    }
+                }
+            }
+        },
+        "/api/teacher/logout": {
+            "post": {
+                "tags": [
+                    "Authenticated Teacher"
+                ],
+                "summary": "Log out the authenticated teacher",
+                "operationId": "995628becbd1218403ee34ba2f8954c1",
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "device_token": {
+                                        "description": "Device token for push notifications",
+                                        "type": "string",
+                                        "example": "token123",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Teacher logged out successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - Authentication required"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/teacher/change_password": {
+            "post": {
+                "tags": [
+                    "Authenticated Teacher"
+                ],
+                "summary": "Change the authenticated teacher's password",
+                "operationId": "e77e4da5dbfd2e29ea74f8db1bfd560d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "old_password": {
+                                        "description": "Current password",
+                                        "type": "string",
+                                        "example": "secret123"
+                                    },
+                                    "new_password": {
+                                        "description": "New password",
+                                        "type": "string",
+                                        "example": "newsecret123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password changed successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid old password or bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized - Authentication required"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/teacher/update_account": {
+            "post": {
+                "tags": [
+                    "Authenticated Teacher"
+                ],
+                "summary": "Update the authenticated teacher's account details",
+                "operationId": "85394eadd28487b8e833eec0410f3e66",
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Teacher's full name",
+                                        "type": "string",
+                                        "example": "Jane Doe",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Account updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized - Authentication required"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/teacher/delete_account": {
+            "post": {
+                "tags": [
+                    "Authenticated Teacher"
+                ],
+                "summary": "Delete the authenticated teacher's account",
+                "operationId": "a7cb635be04e96f8cf6959bb433cd279",
+                "responses": {
+                    "204": {
+                        "description": "Account deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized - Authentication required"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/teacher/register": {
+            "post": {
+                "tags": [
+                    "Teacher Authentication"
+                ],
+                "summary": "Register a new teacher",
+                "operationId": "09fb7400010998fef647e2cb72e71f0c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Teacher's full name",
+                                        "type": "string",
+                                        "example": "Jane Doe"
+                                    },
+                                    "username": {
+                                        "description": "Teacher's username",
+                                        "type": "string",
+                                        "example": "janedoe",
+                                        "nullable": true
+                                    },
+                                    "phone": {
+                                        "description": "Teacher's phone number",
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "identify_number": {
+                                        "description": "Teacher's identification number",
+                                        "type": "string",
+                                        "example": "ID12345"
+                                    },
+                                    "email": {
+                                        "description": "Teacher's email address",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "jane@example.com"
+                                    },
+                                    "password": {
+                                        "description": "Teacher's password",
+                                        "type": "string",
+                                        "example": "secret123"
+                                    },
+                                    "device_token": {
+                                        "description": "Device token",
+                                        "type": "string",
+                                        "example": "token123",
+                                        "nullable": true
+                                    },
+                                    "device_id": {
+                                        "description": "Device ID",
+                                        "type": "string",
+                                        "example": "device456",
+                                        "nullable": true
+                                    },
+                                    "device_type": {
+                                        "description": "Device type",
+                                        "type": "string",
+                                        "example": "Android",
+                                        "nullable": true
+                                    },
+                                    "device_os": {
+                                        "description": "Device OS",
+                                        "type": "string",
+                                        "example": "Android",
+                                        "nullable": true
+                                    },
+                                    "device_os_version": {
+                                        "description": "Device OS version",
+                                        "type": "string",
+                                        "example": "14",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Teacher registered successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input or duplicate data (e.g., email/phone already exists)"
+                    }
+                }
+            }
+        },
+        "/api/teacher/login": {
+            "post": {
+                "tags": [
+                    "Teacher Authentication"
+                ],
+                "summary": "Log in a teacher",
+                "operationId": "3df955e19e2e73a808de9c396d1c857e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "credential": {
+                                        "description": "Teacher's email or phone",
+                                        "type": "string",
+                                        "example": "jane@example.com"
+                                    },
+                                    "password": {
+                                        "description": "Teacher's password",
+                                        "type": "string",
+                                        "example": "secret123"
+                                    },
+                                    "device_id": {
+                                        "description": "Device ID",
+                                        "type": "string",
+                                        "example": "device456",
+                                        "nullable": true
+                                    },
+                                    "device_token": {
+                                        "description": "Device token",
+                                        "type": "string",
+                                        "example": "token123",
+                                        "nullable": true
+                                    },
+                                    "device_type": {
+                                        "description": "Device type",
+                                        "type": "string",
+                                        "example": "Android",
+                                        "nullable": true
+                                    },
+                                    "device_os": {
+                                        "description": "Device OS",
+                                        "type": "string",
+                                        "example": "Android",
+                                        "nullable": true
+                                    },
+                                    "device_os_version": {
+                                        "description": "Device OS version",
+                                        "type": "string",
+                                        "example": "14",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Teacher logged in successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/api/teacher/check_credential": {
+            "post": {
+                "tags": [
+                    "Teacher Authentication"
+                ],
+                "summary": "Check if a teacher's credential (email/phone) is valid or exists",
+                "operationId": "f712379364e3e10ef07495c4ddb3f497",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "credential": {
+                                        "description": "Teacher's email or phone",
+                                        "type": "string",
+                                        "example": "jane@example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Credential check successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid credential format"
+                    }
+                }
+            }
+        },
+        "/api/teacher/check_code": {
+            "post": {
+                "tags": [
+                    "Teacher Authentication"
+                ],
+                "summary": "Verify a reset code for a teacher's credential",
+                "operationId": "1b6d4af9d40ec35ea7f47f72287f0c53",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "credential": {
+                                        "description": "Teacher's email or phone",
+                                        "type": "string",
+                                        "example": "jane@example.com"
+                                    },
+                                    "code": {
+                                        "description": "Verification code",
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Code verified successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid credential or code"
+                    },
+                    "404": {
+                        "description": "Credential not found"
+                    }
+                }
+            }
+        },
+        "/api/teacher/reset_password": {
+            "post": {
+                "tags": [
+                    "Teacher Authentication"
+                ],
+                "summary": "Reset a teacher's password",
+                "operationId": "d80718b7a31fe542a964919313cc2a99",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "credential": {
+                                        "description": "Teacher's email or phone",
+                                        "type": "string",
+                                        "example": "jane@example.com"
+                                    },
+                                    "code": {
+                                        "description": "Verification code",
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "password": {
+                                        "description": "New password",
+                                        "type": "string",
+                                        "minLength": 6,
+                                        "example": "newsecret123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password reset successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid credential, code, or password"
+                    },
+                    "404": {
+                        "description": "Credential not found"
+                    }
+                }
+            }
+        },
+        "/dashboard/fetch_teachers": {
+            "post": {
+                "tags": [
+                    "Dashboard Teacher"
+                ],
+                "summary": "Fetch a list of teachers",
+                "operationId": "dcd24888d1ad71363de554dc104c124c",
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Filter by teacher name",
+                                        "type": "string",
+                                        "example": "Jane",
+                                        "nullable": true
+                                    },
+                                    "email": {
+                                        "description": "Filter by teacher email",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "jane@example.com",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "A list of teachers",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/dashboard/fetch_teacher_details": {
+            "post": {
+                "tags": [
+                    "Dashboard Teacher"
+                ],
+                "summary": "Fetch details of a specific teacher",
+                "operationId": "b20820f8ca49ea4f26d73ee5b3907928",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "teacher_id": {
+                                        "description": "The ID of the teacher",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Teacher details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Teacher not found"
+                    },
+                    "400": {
+                        "description": "Invalid teacher ID"
+                    }
+                }
+            }
+        },
+        "/dashboard/create_teacher": {
+            "post": {
+                "tags": [
+                    "Dashboard Teacher"
+                ],
+                "summary": "Create a new teacher",
+                "operationId": "3f6c37f075840c1f1e0f33a2d00934d9",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Teacher's full name",
+                                        "type": "string",
+                                        "example": "Jane Doe"
+                                    },
+                                    "username": {
+                                        "description": "Teacher's username",
+                                        "type": "string",
+                                        "example": "janedoe",
+                                        "nullable": true
+                                    },
+                                    "phone": {
+                                        "description": "Teacher's phone number",
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "identify_number": {
+                                        "description": "Teacher's identification number",
+                                        "type": "string",
+                                        "example": "ID12345"
+                                    },
+                                    "email": {
+                                        "description": "Teacher's email address",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "jane@example.com"
+                                    },
+                                    "password": {
+                                        "description": "Teacher's password",
+                                        "type": "string",
+                                        "example": "secret123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Teacher created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input or duplicate data (e.g., email/phone already exists)"
+                    }
+                }
+            }
+        },
+        "/dashboard/update_teacher": {
+            "post": {
+                "tags": [
+                    "Dashboard Teacher"
+                ],
+                "summary": "Update an existing teacher",
+                "operationId": "10213682bf5118fab3e9a5b7110fd863",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "teacher_id": {
+                                        "description": "The ID of the teacher to update",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "name": {
+                                        "description": "Teacher's full name",
+                                        "type": "string",
+                                        "example": "Jane Doe",
+                                        "nullable": true
+                                    },
+                                    "username": {
+                                        "description": "Teacher's username",
+                                        "type": "string",
+                                        "example": "janedoe",
+                                        "nullable": true
+                                    },
+                                    "phone": {
+                                        "description": "Teacher's phone number",
+                                        "type": "string",
+                                        "example": "1234567890",
+                                        "nullable": true
+                                    },
+                                    "identify_number": {
+                                        "description": "Teacher's identification number",
+                                        "type": "string",
+                                        "example": "ID12345",
+                                        "nullable": true
+                                    },
+                                    "email": {
+                                        "description": "Teacher's email address",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "jane@example.com",
+                                        "nullable": true
+                                    },
+                                    "password": {
+                                        "description": "Teacher's new password",
+                                        "type": "string",
+                                        "example": "newsecret123",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Teacher updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Teacher not found"
+                    },
+                    "400": {
+                        "description": "Invalid input or duplicate data (e.g., email/phone already exists)"
+                    }
+                }
+            }
+        },
+        "/dashboard/delete_teacher": {
+            "post": {
+                "tags": [
+                    "Dashboard Teacher"
+                ],
+                "summary": "Delete a teacher",
+                "operationId": "a037a340927a5e90058c64cca7bcc2c2",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "teacher_id": {
+                                        "description": "The ID of the teacher to delete",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Teacher deleted successfully"
+                    },
+                    "404": {
+                        "description": "Teacher not found"
+                    },
+                    "400": {
+                        "description": "Invalid teacher ID"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Authenticated User"
+                ],
+                "summary": "Log out the authenticated user",
+                "operationId": "fb011cf38df7372579c7b3d1c92a601d",
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "device_token": {
+                                        "description": "Device token for push notifications",
+                                        "type": "string",
+                                        "example": "token123",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User logged out successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - Authentication required"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/change_password": {
+            "post": {
+                "tags": [
+                    "Authenticated User"
+                ],
+                "summary": "Change the authenticated user's password",
+                "operationId": "89cb70b6f4c43cd0f47de1f8eda30d5f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "old_password": {
+                                        "description": "Current password",
+                                        "type": "string",
+                                        "example": "secret123"
+                                    },
+                                    "new_password": {
+                                        "description": "New password",
+                                        "type": "string",
+                                        "example": "newsecret123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password changed successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid old password or bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized - Authentication required"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/update_account": {
+            "post": {
+                "tags": [
+                    "Authenticated User"
+                ],
+                "summary": "Update the authenticated user's account details",
+                "operationId": "84a909d8e69e7b595d5f802a56f49c3b",
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "User's full name",
+                                        "type": "string",
+                                        "example": "John Doe",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Account updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized - Authentication required"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/delete_account": {
+            "post": {
+                "tags": [
+                    "Authenticated User"
+                ],
+                "summary": "Delete the authenticated user's account",
+                "operationId": "fd5841381e15d497098f3e44e65f5322",
+                "responses": {
+                    "204": {
+                        "description": "Account deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized - Authentication required"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Register a new user",
+                "operationId": "a75b3b6e69d9193eba9738aed0611f52",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "User's full name",
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "username": {
+                                        "description": "User's username",
+                                        "type": "string",
+                                        "example": "johndoe",
+                                        "nullable": true
+                                    },
+                                    "phone": {
+                                        "description": "User's phone number",
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "identify_number": {
+                                        "description": "User's identification number",
+                                        "type": "string",
+                                        "example": "ID12345"
+                                    },
+                                    "email": {
+                                        "description": "User's email address",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john@example.com"
+                                    },
+                                    "password": {
+                                        "description": "User's password",
+                                        "type": "string",
+                                        "example": "secret123"
+                                    },
+                                    "device_token": {
+                                        "description": "Device token for push notifications",
+                                        "type": "string",
+                                        "example": "token123",
+                                        "nullable": true
+                                    },
+                                    "device_id": {
+                                        "description": "Unique device identifier",
+                                        "type": "string",
+                                        "example": "device456",
+                                        "nullable": true
+                                    },
+                                    "device_type": {
+                                        "description": "Type of device (e.g., iOS, Android)",
+                                        "type": "string",
+                                        "example": "Android",
+                                        "nullable": true
+                                    },
+                                    "device_os": {
+                                        "description": "Device operating system",
+                                        "type": "string",
+                                        "example": "Android",
+                                        "nullable": true
+                                    },
+                                    "device_os_version": {
+                                        "description": "Device OS version",
+                                        "type": "string",
+                                        "example": "14",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User registered successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input or duplicate data (e.g., email/phone already exists)"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Log in a user",
+                "operationId": "b2997e7f1a4f398eb70a7eaa201108c9",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "credential": {
+                                        "description": "User's email or phone",
+                                        "type": "string",
+                                        "example": "john@example.com"
+                                    },
+                                    "password": {
+                                        "description": "User's password",
+                                        "type": "string",
+                                        "example": "secret123"
+                                    },
+                                    "device_id": {
+                                        "description": "Unique device identifier",
+                                        "type": "string",
+                                        "example": "device456",
+                                        "nullable": true
+                                    },
+                                    "device_token": {
+                                        "description": "Device token for push notifications",
+                                        "type": "string",
+                                        "example": "token123",
+                                        "nullable": true
+                                    },
+                                    "device_type": {
+                                        "description": "Type of device (e.g., iOS, Android)",
+                                        "type": "string",
+                                        "example": "Android",
+                                        "nullable": true
+                                    },
+                                    "device_os": {
+                                        "description": "Device operating system",
+                                        "type": "string",
+                                        "example": "Android",
+                                        "nullable": true
+                                    },
+                                    "device_os_version": {
+                                        "description": "Device OS version",
+                                        "type": "string",
+                                        "example": "14",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User logged in successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/api/check_credential": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Check if a credential (email/phone) is valid or exists",
+                "operationId": "e88c4b1135bc6de7fe29cd8846eaeb00",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "credential": {
+                                        "description": "User's email or phone to check",
+                                        "type": "string",
+                                        "example": "john@example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Credential check successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid credential format"
+                    }
+                }
+            }
+        },
+        "/api/check_code": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Verify a reset code for a credential",
+                "operationId": "5c7efe30db68c17f16838cb2ede70abe",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "credential": {
+                                        "description": "User's email or phone",
+                                        "type": "string",
+                                        "example": "john@example.com"
+                                    },
+                                    "code": {
+                                        "description": "Verification code",
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Code verified successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid credential or code"
+                    },
+                    "404": {
+                        "description": "Credential not found"
+                    }
+                }
+            }
+        },
+        "/api/reset_password": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Reset a user's password",
+                "operationId": "b141d9ce9a018bfc167105cff2e6ed98",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "credential": {
+                                        "description": "User's email or phone",
+                                        "type": "string",
+                                        "example": "john@example.com"
+                                    },
+                                    "code": {
+                                        "description": "Verification code",
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "password": {
+                                        "description": "New password",
+                                        "type": "string",
+                                        "minLength": 6,
+                                        "example": "newsecret123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password reset successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid credential, code, or password"
+                    },
+                    "404": {
+                        "description": "Credential not found"
+                    }
+                }
+            }
+        },
+        "/dashboard/fetch_users": {
+            "post": {
+                "tags": [
+                    "User Dashboard"
+                ],
+                "summary": "Fetch a list of users",
+                "operationId": "74de1b23b353531cab3a856e234f0faa",
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Filter by user name",
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "email": {
+                                        "description": "Filter by user email",
+                                        "type": "string",
+                                        "format": "email",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "A list of users",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/dashboard/fetch_user_details": {
+            "post": {
+                "tags": [
+                    "User Dashboard"
+                ],
+                "summary": "Fetch details of a specific user",
+                "operationId": "fcec9ec0274a533e80b8046dda02d71b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id": {
+                                        "description": "The ID of the user",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "400": {
+                        "description": "Invalid user ID"
+                    }
+                }
+            }
+        },
+        "/dashboard/create_user": {
+            "post": {
+                "tags": [
+                    "User Dashboard"
+                ],
+                "summary": "Create a new user",
+                "operationId": "3dbc122b35926a6ee1aac97190aeab88",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "User's full name",
+                                        "type": "string"
+                                    },
+                                    "username": {
+                                        "description": "User's username",
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "phone": {
+                                        "description": "User's phone number",
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "identify_number": {
+                                        "description": "User's identification number",
+                                        "type": "string",
+                                        "example": "ID12345"
+                                    },
+                                    "email": {
+                                        "description": "User's email address",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "description": "User's password",
+                                        "type": "string",
+                                        "example": "secret123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input or duplicate data (e.g., email/phone already exists)"
+                    }
+                }
+            }
+        },
+        "/dashboard/update_user": {
+            "post": {
+                "tags": [
+                    "User Dashboard"
+                ],
+                "summary": "Update an existing user",
+                "operationId": "5355e98f6a7c19196d2f971e014a814b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id": {
+                                        "description": "The ID of the user to update",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "name": {
+                                        "description": "User's full name",
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "username": {
+                                        "description": "User's username",
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "phone": {
+                                        "description": "User's phone number",
+                                        "type": "string",
+                                        "example": "1234567890",
+                                        "nullable": true
+                                    },
+                                    "identify_number": {
+                                        "description": "User's identification number",
+                                        "type": "string",
+                                        "example": "ID12345",
+                                        "nullable": true
+                                    },
+                                    "email": {
+                                        "description": "User's email address",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@example.com",
+                                        "nullable": true
+                                    },
+                                    "password": {
+                                        "description": "User's new password",
+                                        "type": "string",
+                                        "example": "newsecret123",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "400": {
+                        "description": "Invalid input or duplicate data (e.g., email/phone already exists)"
+                    }
+                }
+            }
+        },
+        "/dashboard/delete_user": {
+            "post": {
+                "tags": [
+                    "User Dashboard"
+                ],
+                "summary": "Delete a user",
+                "operationId": "b591cc7205fca1a700d1448a98b8716b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id": {
+                                        "description": "The ID of the user to delete",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "User deleted successfully"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "400": {
+                        "description": "Invalid user ID"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Authenticated Employee",
+            "description": "Authenticated Employee"
+        },
+        {
+            "name": "Employee Authentication",
+            "description": "Employee Authentication"
+        },
+        {
+            "name": "Dashboard Employee",
+            "description": "Dashboard Employee"
+        },
+        {
+            "name": "Authenticated Teacher",
+            "description": "Authenticated Teacher"
+        },
+        {
+            "name": "Teacher Authentication",
+            "description": "Teacher Authentication"
+        },
+        {
+            "name": "Dashboard Teacher",
+            "description": "Dashboard Teacher"
+        },
+        {
+            "name": "Authenticated User",
+            "description": "Authenticated User"
+        },
+        {
+            "name": "Authentication",
+            "description": "Authentication"
+        },
+        {
+            "name": "User Dashboard",
+            "description": "User Dashboard"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "http",
+                "scheme": "bearer",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
+}

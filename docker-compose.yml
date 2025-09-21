@@ -1,0 +1,71 @@
+services:
+  auth-app:
+    build:
+      context: ./auth
+      dockerfile: Dockerfile
+    container_name: auth-app
+    ports:
+      - "8081:80"
+    networks:
+      - docker-net
+
+  courses-app:
+    build:
+      context: ./course
+      dockerfile: Dockerfile
+    container_name: courses-app
+    ports:
+      - "8082:80"
+    networks:
+      - docker-net
+
+  auth-db:
+    image: mysql:8.0
+    container_name: auth-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: auth_db
+      MYSQL_USER: auth_user
+      MYSQL_PASSWORD: auth_pass
+    ports:
+      - "3307:3306"
+    volumes:
+      - authdbdata:/var/lib/mysql
+    networks:
+      - docker-net
+
+  courses-db:
+    image: mysql:8.0
+    container_name: courses-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: courses_db
+      MYSQL_USER: courses_user
+      MYSQL_PASSWORD: courses_pass
+    ports:
+      - "3308:3306"
+    volumes:
+      - coursesdbdata:/var/lib/mysql
+    networks:
+      - docker-net
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      PMA_ARBITRARY: 1
+    ports:
+      - "8083:80"
+    networks:
+      - docker-net
+
+networks:
+  docker-net:
+    driver: bridge
+
+volumes:
+  authdbdata:
+  coursesdbdata:

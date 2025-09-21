@@ -1,0 +1,824 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Stage API",
+        "description": "API documentation for managing users, teachers, employees, courses, and more with localization support.",
+        "version": "1.1"
+    },
+    "servers": [
+        {
+            "url": "http://api.example.com",
+            "description": "Production server"
+        }
+    ],
+    "paths": {
+        "/dashboard/fetch_courses": {
+            "post": {
+                "tags": [
+                    "Dashboard Course"
+                ],
+                "summary": "Fetch a list of courses",
+                "operationId": "8639f6764d6c3319d17743adf0f28338",
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "description": "Filter by course title",
+                                        "type": "string",
+                                        "example": "Math 101",
+                                        "nullable": true
+                                    },
+                                    "type": {
+                                        "description": "Filter by course type",
+                                        "type": "string",
+                                        "example": "online",
+                                        "nullable": true
+                                    },
+                                    "parent_id": {
+                                        "description": "Filter by parent course ID",
+                                        "type": "integer",
+                                        "example": 1,
+                                        "nullable": true
+                                    },
+                                    "code": {
+                                        "description": "Filter by course code",
+                                        "type": "string",
+                                        "example": "MATH101",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "A list of courses",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/dashboard/fetch_course_details": {
+            "post": {
+                "tags": [
+                    "Dashboard Course"
+                ],
+                "summary": "Fetch details of a specific course",
+                "operationId": "22397282cd3c701bb18ca6ed5f6c8058",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "course_id": {
+                                        "description": "The ID of the course",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Course details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Course not found"
+                    },
+                    "400": {
+                        "description": "Invalid course ID"
+                    }
+                }
+            }
+        },
+        "/dashboard/create_course": {
+            "post": {
+                "tags": [
+                    "Dashboard Course"
+                ],
+                "summary": "Create a new course",
+                "operationId": "d02f0a34903f6f9b1106f2616910f9bf",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "translations": {
+                                        "description": "Course translations",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "parent_id": {
+                                        "description": "Parent course ID",
+                                        "type": "integer",
+                                        "example": 1,
+                                        "nullable": true
+                                    },
+                                    "organization_id": {
+                                        "description": "Organization ID",
+                                        "type": "integer",
+                                        "example": 1,
+                                        "nullable": true
+                                    },
+                                    "stage_id": {
+                                        "description": "Stage ID",
+                                        "type": "integer",
+                                        "example": 1,
+                                        "nullable": true
+                                    },
+                                    "subject_id": {
+                                        "description": "Subject ID",
+                                        "type": "integer",
+                                        "example": 1,
+                                        "nullable": true
+                                    },
+                                    "type": {
+                                        "description": "Course type",
+                                        "type": "string",
+                                        "example": "online"
+                                    },
+                                    "status": {
+                                        "description": "Course status",
+                                        "type": "string",
+                                        "enum": [
+                                            "active",
+                                            "inactive"
+                                        ],
+                                        "example": "active",
+                                        "nullable": true
+                                    },
+                                    "is_private": {
+                                        "description": "Is the course private?",
+                                        "type": "boolean",
+                                        "example": true,
+                                        "nullable": true
+                                    },
+                                    "has_website": {
+                                        "description": "Does the course have a website?",
+                                        "type": "boolean",
+                                        "example": false,
+                                        "nullable": true
+                                    },
+                                    "has_app": {
+                                        "description": "Does the course have an app?",
+                                        "type": "boolean",
+                                        "example": false,
+                                        "nullable": true
+                                    },
+                                    "start_date": {
+                                        "description": "Course start date",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-01-01"
+                                    },
+                                    "end_date": {
+                                        "description": "Course end date",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-06-30"
+                                    },
+                                    "image": {
+                                        "description": "Course image URL or file",
+                                        "type": "string",
+                                        "example": "course.jpg",
+                                        "nullable": true
+                                    },
+                                    "video": {
+                                        "description": "Video details",
+                                        "properties": {
+                                            "is_file": {
+                                                "description": "Is the video a file? (1 = yes, 0 = no)",
+                                                "type": "integer",
+                                                "enum": [
+                                                    0,
+                                                    1
+                                                ],
+                                                "example": 1,
+                                                "nullable": true
+                                            },
+                                            "video_type": {
+                                                "description": "Type of video",
+                                                "type": "string",
+                                                "example": "mp4"
+                                            },
+                                            "file": {
+                                                "description": "Video file (required if is_file = 1)",
+                                                "type": "string",
+                                                "example": "video.mp4"
+                                            },
+                                            "link": {
+                                                "description": "Video link (required if is_file = 0)",
+                                                "type": "string",
+                                                "example": "https://example.com/video"
+                                            }
+                                        },
+                                        "type": "object",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Course created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input or validation error"
+                    }
+                }
+            }
+        },
+        "/dashboard/update_course": {
+            "post": {
+                "tags": [
+                    "Dashboard Course"
+                ],
+                "summary": "Update an existing course",
+                "operationId": "86519738cdc747ebb9cd74ec4c9a3b51",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "course_id": {
+                                        "description": "The ID of the course to update",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "translations": {
+                                        "description": "Course translations",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object"
+                                        },
+                                        "nullable": true
+                                    },
+                                    "code": {
+                                        "description": "Course code",
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "MATH101",
+                                        "nullable": true
+                                    },
+                                    "parent_id": {
+                                        "description": "Parent course ID",
+                                        "type": "integer",
+                                        "example": 1,
+                                        "nullable": true
+                                    },
+                                    "type": {
+                                        "description": "Course type",
+                                        "type": "string",
+                                        "example": "online",
+                                        "nullable": true
+                                    },
+                                    "status": {
+                                        "description": "Course status",
+                                        "type": "string",
+                                        "enum": [
+                                            "active",
+                                            "inactive"
+                                        ],
+                                        "example": "active",
+                                        "nullable": true
+                                    },
+                                    "image": {
+                                        "description": "Course image URL or file",
+                                        "type": "string",
+                                        "example": "course.jpg",
+                                        "nullable": true
+                                    },
+                                    "video": {
+                                        "description": "Video details",
+                                        "properties": {
+                                            "is_file": {
+                                                "description": "Is the video a file? (1 = yes, 0 = no)",
+                                                "type": "integer",
+                                                "enum": [
+                                                    0,
+                                                    1
+                                                ],
+                                                "example": 1,
+                                                "nullable": true
+                                            },
+                                            "video_type": {
+                                                "description": "Type of video",
+                                                "type": "string",
+                                                "example": "mp4"
+                                            },
+                                            "file": {
+                                                "description": "Video file (required if is_file = 1)",
+                                                "type": "string",
+                                                "example": "video.mp4"
+                                            },
+                                            "link": {
+                                                "description": "Video link (required if is_file = 0)",
+                                                "type": "string",
+                                                "example": "https://example.com/video"
+                                            }
+                                        },
+                                        "type": "object",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Course updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Course not found"
+                    },
+                    "400": {
+                        "description": "Invalid input or validation error"
+                    }
+                }
+            }
+        },
+        "/dashboard/delete_course": {
+            "post": {
+                "tags": [
+                    "Dashboard Course"
+                ],
+                "summary": "Delete a course",
+                "operationId": "3bda47f55e94f65d5197557b5d84ff06",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "course_id": {
+                                        "description": "The ID of the course to delete",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Course deleted successfully"
+                    },
+                    "404": {
+                        "description": "Course not found"
+                    },
+                    "400": {
+                        "description": "Invalid course ID"
+                    }
+                }
+            }
+        },
+        "/dashboard/fetch_lessons": {
+            "post": {
+                "tags": [
+                    "Dashboard Lesson"
+                ],
+                "summary": "Fetch a list of lessons",
+                "operationId": "cbffcc8a2067158f1c417dd041312140",
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "translations": {
+                                        "description": "Filter by lesson translations",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object"
+                                        },
+                                        "nullable": true
+                                    },
+                                    "course_id": {
+                                        "description": "Filter by course ID",
+                                        "type": "integer",
+                                        "example": 1,
+                                        "nullable": true
+                                    },
+                                    "parent_id": {
+                                        "description": "Filter by parent course ID",
+                                        "type": "integer",
+                                        "example": 1,
+                                        "nullable": true
+                                    },
+                                    "organization_id": {
+                                        "description": "Filter by organization ID",
+                                        "type": "integer",
+                                        "example": 1,
+                                        "nullable": true
+                                    },
+                                    "type": {
+                                        "description": "Filter by lesson type",
+                                        "type": "string",
+                                        "example": "video",
+                                        "nullable": true
+                                    },
+                                    "status": {
+                                        "description": "Filter by lesson status",
+                                        "type": "string",
+                                        "example": "active",
+                                        "nullable": true
+                                    },
+                                    "is_free": {
+                                        "description": "Filter by free status",
+                                        "type": "boolean",
+                                        "example": true,
+                                        "nullable": true
+                                    },
+                                    "is_standalone": {
+                                        "description": "Filter by standalone status",
+                                        "type": "boolean",
+                                        "example": false,
+                                        "nullable": true
+                                    },
+                                    "price": {
+                                        "description": "Filter by price",
+                                        "type": "number",
+                                        "example": 29.99,
+                                        "nullable": true
+                                    },
+                                    "image": {
+                                        "description": "Filter by image",
+                                        "type": "string",
+                                        "example": "lesson.jpg",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "A list of lessons",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/dashboard/fetch_lesson_details": {
+            "post": {
+                "tags": [
+                    "Dashboard Lesson"
+                ],
+                "summary": "Fetch details of a specific lesson",
+                "operationId": "f9f5e7c71b99926e43cbe08e33aa372e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "lesson_id": {
+                                        "description": "The ID of the lesson",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Lesson details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Lesson not found"
+                    },
+                    "400": {
+                        "description": "Invalid lesson ID"
+                    }
+                }
+            }
+        },
+        "/dashboard/create_lesson": {
+            "post": {
+                "tags": [
+                    "Dashboard Lesson"
+                ],
+                "summary": "Create a new lesson",
+                "operationId": "ef2b6d04e8a3fe8aaa26d8f2db0f9b2f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "translations": {
+                                        "description": "Lesson translations",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "course_id": {
+                                        "description": "The ID of the associated course",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "parent_id": {
+                                        "description": "Parent course ID",
+                                        "type": "integer",
+                                        "example": 1,
+                                        "nullable": true
+                                    },
+                                    "organization_id": {
+                                        "description": "Organization ID",
+                                        "type": "integer",
+                                        "example": 1,
+                                        "nullable": true
+                                    },
+                                    "type": {
+                                        "description": "Lesson type",
+                                        "type": "string",
+                                        "example": "video"
+                                    },
+                                    "status": {
+                                        "description": "Lesson status",
+                                        "type": "string",
+                                        "example": "active",
+                                        "nullable": true
+                                    },
+                                    "is_free": {
+                                        "description": "Is the lesson free?",
+                                        "type": "boolean",
+                                        "example": true,
+                                        "nullable": true
+                                    },
+                                    "is_standalone": {
+                                        "description": "Is the lesson standalone?",
+                                        "type": "boolean",
+                                        "example": false,
+                                        "nullable": true
+                                    },
+                                    "price": {
+                                        "description": "Lesson price",
+                                        "type": "number",
+                                        "example": 29.99,
+                                        "nullable": true
+                                    },
+                                    "image": {
+                                        "description": "Lesson image URL or file",
+                                        "type": "string",
+                                        "example": "lesson.jpg",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Lesson created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input or validation error"
+                    }
+                }
+            }
+        },
+        "/dashboard/update_lesson": {
+            "post": {
+                "tags": [
+                    "Dashboard Lesson"
+                ],
+                "summary": "Update an existing lesson",
+                "operationId": "6cc3a73fa551c8f2f5cb1c4f7fb0e90f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "lesson_id": {
+                                        "description": "The ID of the lesson to update",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "translations": {
+                                        "description": "Lesson translations",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "course_id": {
+                                        "description": "The ID of the associated course",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "parent_id": {
+                                        "description": "Parent course ID",
+                                        "type": "integer",
+                                        "example": 1,
+                                        "nullable": true
+                                    },
+                                    "organization_id": {
+                                        "description": "Organization ID",
+                                        "type": "integer",
+                                        "example": 1,
+                                        "nullable": true
+                                    },
+                                    "type": {
+                                        "description": "Lesson type",
+                                        "type": "string",
+                                        "example": "video",
+                                        "nullable": true
+                                    },
+                                    "status": {
+                                        "description": "Lesson status",
+                                        "type": "string",
+                                        "example": "active",
+                                        "nullable": true
+                                    },
+                                    "is_free": {
+                                        "description": "Is the lesson free?",
+                                        "type": "boolean",
+                                        "example": true,
+                                        "nullable": true
+                                    },
+                                    "is_standalone": {
+                                        "description": "Is the lesson standalone?",
+                                        "type": "boolean",
+                                        "example": false,
+                                        "nullable": true
+                                    },
+                                    "price": {
+                                        "description": "Lesson price",
+                                        "type": "number",
+                                        "example": 29.99,
+                                        "nullable": true
+                                    },
+                                    "image": {
+                                        "description": "Lesson image URL or file",
+                                        "type": "string",
+                                        "example": "lesson.jpg",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Lesson updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Lesson not found"
+                    },
+                    "400": {
+                        "description": "Invalid input or validation error"
+                    }
+                }
+            }
+        },
+        "/dashboard/delete_lesson": {
+            "post": {
+                "tags": [
+                    "Dashboard Lesson"
+                ],
+                "summary": "Delete a lesson",
+                "operationId": "e3848208a020550b017a04b47459c4f8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "lesson_id": {
+                                        "description": "The ID of the lesson to delete",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Lesson deleted successfully"
+                    },
+                    "404": {
+                        "description": "Lesson not found"
+                    },
+                    "400": {
+                        "description": "Invalid lesson ID"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "Enter your Bearer token here",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Dashboard Course",
+            "description": "Dashboard Course"
+        },
+        {
+            "name": "Dashboard Lesson",
+            "description": "Dashboard Lesson"
+        }
+    ]
+}

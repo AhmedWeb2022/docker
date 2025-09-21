@@ -1,0 +1,10 @@
+{
+    "name": "modules/employee",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Modules\\Employee\\": "src/"
+        }
+    },
+    "require": {}
+}

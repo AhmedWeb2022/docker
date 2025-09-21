@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Modules\Admin\Http\Requests\Global\Admin;
+
+use Illuminate\Foundation\Http\FormRequest;
+use App\Modules\Base\Domain\Request\BaseRequestAbstract;
+use App\Modules\Admin\Application\DTOS\Admin\AdminDTO;
+
+class AdminIdRequest extends BaseRequestAbstract
+{
+    protected  $dtoClass = AdminDTO::class;
+    /**
+     * Determine if the Admin is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     */
+    public function customRules(): array
+    {
+        return [ // data validation
+            'admin_id' => 'required|integer|exists:admins,id',
+        ];
+    }
+
+
+}
