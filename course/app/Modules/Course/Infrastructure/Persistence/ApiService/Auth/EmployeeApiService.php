@@ -63,7 +63,7 @@ class EmployeeApiService implements AuthenticatesViaToken
                 ->retry(3, 100)
                 ->withOptions(['verify' => false])
                 ->post($url);
-            dd($response->json());
+            // dd($response->json());
             return $response->json();
         } catch (ConnectionException $e) {
             throw new \Exception("Connection to check authentication failed or timed out." . $e->getMessage());
