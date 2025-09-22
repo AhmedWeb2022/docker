@@ -6,6 +6,10 @@ services:
     container_name: auth-app
     ports:
       - "8081:80"
+    volumes:
+      - ./auth:/var/www
+    depends_on:
+      - auth-db
     networks:
       - docker-net
 
@@ -16,6 +20,10 @@ services:
     container_name: courses-app
     ports:
       - "8082:80"
+    volumes:
+      - ./course:/var/www
+    depends_on:
+      - courses-db
     networks:
       - docker-net
 
@@ -26,8 +34,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: auth_db
-      MYSQL_USER: auth_user
-      MYSQL_PASSWORD: auth_pass
+      # MYSQL_USER: auth_user
+      # MYSQL_PASSWORD: auth_pass
     ports:
       - "3307:3306"
     volumes:
@@ -42,8 +50,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: courses_db
-      MYSQL_USER: courses_user
-      MYSQL_PASSWORD: courses_pass
+      # MYSQL_USER: courses_user
+      # MYSQL_PASSWORD: courses_pass
     ports:
       - "3308:3306"
     volumes:
